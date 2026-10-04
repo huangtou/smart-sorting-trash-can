@@ -1,0 +1,208 @@
+###############################################################################
+#  智能分类垃圾桶 · Git 忽略规则
+#  适用技术栈：Keil MDK-ARM(V5) + STM32CubeMX(HAL) + MaixPy(Python) + SolidWorks
+#  规则按"编译产物 / 工具个人配置 / 语言产物 / 系统垃圾"分类，可直接用于 GitHub
+###############################################################################
+
+
+###############################################################################
+# 1. Keil MDK-ARM  ——  编译产物（必须忽略，否则仓库会多出几十 MB）
+###############################################################################
+
+# 编译输出目录（Objects / Listings）
+MDK-ARM/gongchuang/
+MDK-ARM/Obj/
+MDK-ARM/List/
+MDK-ARM/build/
+MDK-ARM/Build/
+DebugConfig/
+**/DebugConfig/
+
+# 目标文件与调试信息
+*.o
+*.obj
+*.axf
+*.elf
+*.d
+*.crf
+*.dep
+*.lnp
+*.iex
+*.tra
+*.plg
+*.map
+*.hex
+*.bin
+*.sct
+*.scvd
+*.lst
+*.htm
+*.build_log.htm
+
+# 编译中间文件 / 预处理输出
+*.i
+*.ii
+*.ci
+
+
+###############################################################################
+# 2. Keil MDK-ARM  ——  个人化工程配置（含本机路径 / 窗口布局 / 调试器设置）
+#    说明：*.uvprojx（工程文件）与 *.ioc（CubeMX 配置）必须保留，不要忽略
+###############################################################################
+*.uvguix.*
+*.uvoptx
+*.uvguix
+*.dbgconf
+*.uvision_log
+*.ini
+
+# 若希望把"断点/书签/调试器配置"分享给队友，把上面两行 *.uvoptx / *.dbgconf 注释掉即可
+# !*.uvoptx
+# !*.dbgconf
+
+
+###############################################################################
+# 3. STM32CubeMX / CubeIDE
+###############################################################################
+.mxproject
+*.ioc.bak
+*.ioc~
+Backup/
+Backups/
+**/Backup*/
+Inc_Backup/
+Src_Backup/
+.settings/
+.metadata/
+Debug/
+Release/
+*.launch
+.cproject
+.project
+.mxproject
+
+
+###############################################################################
+# 4. STM32 HAL 库中未使用的庞然大物（可选，默认忽略，约节省 40+ MB）
+#    ⚠ 如果后续要用到 DSP 数学库 / CMSIS-NN 神经网络库，
+#      请把下面两行注释掉，再用 CubeMX 重新生成一次即可
+###############################################################################
+**/Drivers/CMSIS/DSP/
+**/Drivers/CMSIS/NN/
+**/Drivers/CMSIS/RTOS2/
+**/Middlewares/Third_Party/
+
+# 【推荐】STM32 固件库（HAL + CMSIS）整体不入库 —— 约 20 MB，且可由 STM32CubeMX
+#   依据 gongchuang.ioc 一键 100% 还原。克隆仓库后请先：
+#     CubeMX 打开 gongchuang.ioc → Generate Code，再用 Keil 打开工程编译
+#   若希望"克隆即可编译（无需 CubeMX）"，把下面一行注释掉，再 git add Drivers 即可
+**/Drivers/
+
+
+###############################################################################
+# 5. Python（视觉方案 MaixPy 脚本）
+###############################################################################
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+venv/
+.venv/
+env/
+ENV/
+.pytest_cache/
+.ipynb_checkpoints/
+.mypy_cache/
+
+
+###############################################################################
+# 6. SolidWorks / CAD 临时文件
+###############################################################################
+~$*
+~$*.SLDPRT
+~$*.SLDASM
+~$*.SLDDRW
+*.swp
+*.sldtmp
+*.sldlfp.bak
+*.sldbak
+thumbnail/
+
+# SolidWorks 工程图源文件（体积大，已导出 PDF / DWG 供查看）
+# 若必须保留源工程图，把下面一行注释掉
+*.SLDDRW
+
+# 3D 预览缓存与渲染缓存
+*.zpr
+*.igs.bak
+*.step.bak
+*.stp.bak
+*.STL.bak
+
+
+###############################################################################
+# 7. 编辑器 / IDE
+###############################################################################
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.sdf
+*.opensdf
+*.VC.db
+*.VC.opendb
+*.userosscache
+*.sln.docstates
+*.code-workspace
+
+
+###############################################################################
+# 8. 操作系统垃圾文件
+###############################################################################
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+System Volume Information/
+*.lnk
+*.tmp
+*.temp
+*.log
+*.stackdump
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+
+###############################################################################
+# 9. 其他
+###############################################################################
+# 串口调试助手 / 逻辑分析仪等抓包产物
+*.csv.bak
+*.asc
+
+# 打包产物（不建议把压缩包传 GitHub，用 Release 功能）
+*.7z
+*.rar
+*.zip
+
+# 若需要保留某个被上面规则误伤的文件，用 ! 取消忽略，例如：
+# !MDK-ARM/startup_stm32f407xx.s
+# !建模/相关资料/工创赛PPT第二版.pptx
